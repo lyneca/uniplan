@@ -29,6 +29,15 @@
         {% for day in week %}
         <div class="calendar-day">
             <span class="date">{{ day }}</span><br />
+            {% if day.events %}
+            <div class="event-text">{{ day.events|length }} Event{{ day.events|pluralize }}
+                <div class="events"> 
+                {% for event in day.events %}
+                    {{ event }}<br>
+                {% endfor %}
+                </div>
+            </div>
+            {% endif %}
             {% for task in day.tasks %}
             <div class="task">{{ task.unit.name }}
                 <span class="task-name">{{ task.name }}<br><i class="material-icons">keyboard_arrow_down</i></span>

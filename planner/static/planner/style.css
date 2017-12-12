@@ -13,36 +13,43 @@ h3 {
     box-shadow: 0 0 0 1px #dddddd;
 }
 
-.task {
+.task, .event-text {
     white-space: nowrap;
     position: relative;
     display: inline-block;
     border-radius: 3px;
     cursor: pointer;
     margin-left: 10px;
+    z-index: 0;
 }
 
-.task-name {
+.task-name, .events {
     opacity: 0;
     color: black;
     width: 100px;
     background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px;
     box-shadow: 0 0 5px 5px rgba(255, 255, 255, 0.5);
     text-align: center;
     border-radius: 6px;
     position: absolute;
     left: 0;
     bottom: 25px;
-    z-index: 1;
+    z-index: 100;
     font-style: italic;
     vertical-align: text-top;
     visibility: hidden;
     transition: all 0.2s ease-out;
 }
 
-.task:hover .task-name {
+.task:hover .task-name, .event-text:hover .events {
     visibility: visible;
     opacity: 1;
+}
+
+.events {
+    text-align: left;
+    width: inherit;
 }
 
 .task-list {
