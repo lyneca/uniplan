@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    Assessments for user {{ user.username }}:
+    <ul>
+    {% for unit, assessments in units.items %}
+        <li>{{ unit.name }}: {{ unit.long_name }}
+            <ul>
+                {% for assessment in assessments %}
+                    <li>{{ assessment.name }}: {{ assessment.date }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
