@@ -1,21 +1,43 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <link rel="stylesheet" type="text/css" href="{% static 'planner/style.css' %}" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{% static 'planner/css/materialize.min.css' %}"  media="screen,projection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>uniplan</title>
 </head>
 <body>
-    Assessments for user {{ user.username }}:
-    <ul>
-    {% for unit, assessments in units.items %}
-        <li>{{ unit.name }}: {{ unit.long_name }}
-            <ul>
-                {% for assessment in assessments %}
-                    <li>{{ assessment.name }}: {{ assessment.date }}</li>
-                {% endfor %}
-            </ul>
-        </li>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+
+    <div class="container">
+    
+    <div class="menu">
+        <div class="title">uniplan</div>
+        <div class="button active">- tasks</div>
+        <div class="button">- about</div>
+        <div class="button">- login</div>
+    </div>
+
+    <h3>your tasks</h3>
+    <div class="grid-container">
+    {% for week in weeks %}
+        {% for day in week %}
+        <div class="calendar-day">
+            <span class="date">{{ day }}</span><br />
+            {% for task in day.tasks %}
+            <div class="task">{{ task.unit.name }}
+                <span class="task-name">{{ task.name }}<br><i class="material-icons">keyboard_arrow_down</i></span>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
     {% endfor %}
-    </ul>
+    </div>
+    </div>
 </body>
 </html>

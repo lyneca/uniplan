@@ -1,8 +1,5 @@
 from django.contrib import admin
-from .models import User, Unit, Assessment
-
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email')
+from .models import Profile, Unit, Assessment
 
 class UnitAdmin(admin.ModelAdmin):
     list_display = ('name', 'long_name')
@@ -10,6 +7,6 @@ class UnitAdmin(admin.ModelAdmin):
 class AssessmentAdmin(admin.ModelAdmin):
     list_display = ('name', 'date')
 
-admin.site.register(User, UserAdmin)
+admin.site.register(Profile)
 admin.site.register(Unit, UnitAdmin)
 admin.site.register(Assessment, AssessmentAdmin)
