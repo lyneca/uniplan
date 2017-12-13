@@ -61,7 +61,7 @@ class Day:
 def index(request):
     start_day = datetime(2018, 3, 5, tzinfo=UTC())  # This should be set to the first day of semester
     weeks = []
-    for week in range(12):
+    for week in range(13):
         weeks.append([])
         for day in range(7):
             date = Day(start_day + timedelta(days=day, weeks=week))
@@ -82,6 +82,7 @@ def index(request):
             
     context = {
         'user': request.user,
+        'units': Unit.objects.order_by('name'),
         'weeks': weeks
     }
     return render(request, 'planner/index.html', context)

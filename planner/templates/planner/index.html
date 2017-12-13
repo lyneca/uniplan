@@ -1,7 +1,7 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="schedule">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="{% static 'planner/style.css' %}" />
@@ -13,31 +13,36 @@
 <body>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+    <script type="text/javascript">
+        $(document).on('click', 'a[href^="#"]', function (event) {
+            event.preventDefault();
 
+            $('html, body').animate({
+                scrollTop: $($.attr(this, 'href')).offset().top
+            }, 500);
+        });
+    </script>
     
     <div class="menu">
         <div class="title">uniplan</div>
-        <div class="button active">tasks</div>
-        <div class="button">about</div>
-        <div class="button">login</div>
+        <a href="#schedule"><div class="button active">schedule</div></a>
         {% if not user.is_authenticated %}
-        <div class="login">
-            <form action="/login" method="POST">
-                {% csrf_token %}
-                <input type="text" name="username" placeholder="username"><br>
-                <input type="password" name="password" placeholder="••••••••">
-                <input type="submit" hidden>
-            </form>
-        </div>
+            <a href="#login"><div class="button">login</div></a>
+            <a href="#about"><div class="button">about</div></a>
         {% else %}
-        Logged in as {{ user.username }}
+            <a href="#subjects"><div class="button">subjects</div></a>
+            <a href="#about"><div class="button">about</div></a>
+            <a href="/logout"><div class="button">logout</div></a>
         {% endif %}
     </div>
     <div class="container">
 
-    <h3>your tasks</h3>
+    <h4>schedule</h4>
     <div class="grid-container">
     {% for week in weeks %}
+        <div class="week-number">
+            <span class="week-word">Week </span>{{ forloop.counter }}
+        </div>
         {% for day in week %}
         <div class="calendar-day">
             <span class="date">{{ day }}</span><br />
@@ -58,6 +63,41 @@
         </div>
         {% endfor %}
     {% endfor %}
+    </div>
+    {% if not user.is_authenticated %}
+    <div class="section-header" id="login"></div>
+    <div class="section">
+        <h4>login</h4>
+        <div class="login">
+            <form action="/login" method="POST">
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="username"><br>
+                <input type="password" name="password" placeholder="password">
+                <input type="submit" hidden>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <div class="section-header" id="subjects"></div>
+    <div class="section">
+        <h4>add subjects</h4>
+        <form>
+        <input type="text" list="subject-list">
+        <datalist id="subject-list">
+            {% for unit in units %}
+                <option>{{ unit.name }}</option>
+            {% endfor %}
+        </datalist>
+        <input type="submit">
+        </form>
+    </div>
+    {% endif %}
+    <div class="section-header" id="about"></div>
+    <div class="section">
+        <h4>about</h4>
+        <p>Elit eaque recusandae et magnam consequatur? Illo vero consequatur optio iure aut Placeat laboriosam excepturi ea possimus omnis. Exercitationem itaque ipsam minus quos eos nihil quidem non officiis Molestiae tenetur.</p>
+        <p>Consectetur maxime sunt iusto odit recusandae? Natus distinctio quod architecto corporis distinctio Eos nostrum impedit assumenda inventore consequatur. Accusamus commodi expedita consequatur animi facere Suscipit veniam repellat ad molestiae perferendis.</p>
+        <p>Elit suscipit magnam officiis laboriosam animi aliquid exercitationem Quo et nostrum eaque est consequatur? Illum officiis odit a obcaecati ullam hic? Nemo incidunt provident dolores aliquid ut. Eos cum cum?</p>
     </div>
     <div class="footer">a rainbow table project</div>
     </div>

@@ -1,9 +1,17 @@
+ @import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
 span.date {
     float: left;
     color: grey;
 }
 
-h3 {
+h4 {
+    font-size: 30px !important;
+    margin-top: 22px !important;
     font-family: Consolas, monospace;
 }
 
@@ -56,14 +64,18 @@ h3 {
     overflow: scroll;
 }
 
-.calendar-week {
-    margin-bottom: 0 !important;
+.week-number {
+    text-align: center;
+}
+
+.week-word {
+    display: none;
 }
 
 .grid-container {
     display: grid;
     grid-gap: 1px;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: 20px repeat(7, 1fr);
     margin-bottom: 15px;
 }
 
@@ -76,7 +88,7 @@ h3 {
 
 .menu {
     z-index: 4;
-    top: 22px;
+    top: 18px;
     position: fixed;
     left: 10px;
     font-family: Consolas, monospace;
@@ -84,16 +96,36 @@ h3 {
 
 .login {
     margin-top: 10px;
+    width: 300px;
 }
-.login > form > input {
-    padding: 0px !important;
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
-    width: 90% !important;
+form > input {
+    font-family: Consolas, monospace;
+    padding: 10px !important;
+    width: inherit !important;
     height: inherit !important;
+    border: 1px solid #dddddd !important;
+    transition: all 0.2s !important;
 }
 
-.menu > .button {
+form > input:hover {
+    border-color: #bbbbbb !important;
+}
+
+form > input:focus {
+    border-color: #999999 !important;
+    box-shadow: none !important
+}
+
+datalist {
+    width: 100%;
+    font-family: Consolas, monospace;
+}
+
+.logged-in {
+    padding-left: 8px;
+}
+
+.menu > a > .button {
     margin-left: 8px;
     color: #999999;
     padding-left: 0;
@@ -101,16 +133,16 @@ h3 {
     cursor: pointer;
 }
 
-.menu > .button:before {
+.menu > a > .button:before {
     content: "- ";
 }
 
-.menu > .active {
+.menu > a > .active {
     color: #444444;
     padding-left: 10px;
 }
 
-.menu > .button:hover {
+.menu > a > .button:hover {
     color: black;
     padding-left: 10px;
 }
@@ -123,6 +155,9 @@ div.title {
     .grid-container {
         grid-template-columns: 1fr 1fr 1fr;
     }
+    .week-number {
+        display: none;
+    }
     .menu {
         top: 0px;
         left: 0px;
@@ -131,15 +166,19 @@ div.title {
         border-bottom: 1px solid #eeeeee;
         background-color: white;
     }
-    .menu > .button {
+    .menu > a > .button {
         display: inline-block;
         padding-left: 0;
     }
-    .menu > .button:hover {
+    .menu > a > .button:hover {
         padding-left: 0;
     }
-    .menu > .button:before {
+    .menu > a > .button:before {
         content: "";
+    }
+    .section-header {
+        bottom: 60px;
+        position: relative;
     }
 }
 
@@ -147,5 +186,15 @@ div.title {
     .grid-container {
         grid-template-columns: 1fr;
     }
+    .logged-in {
+        display: none;
+    }
+    .week-number {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        display: block;
+    }
+    .week-word {
+        display: inline;
+    }
 }
-
