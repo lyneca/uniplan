@@ -32,4 +32,4 @@ class Assessment(models.Model):
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.unit.name + ' ' + self.name
