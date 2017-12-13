@@ -63,7 +63,15 @@ h3 {
 .grid-container {
     display: grid;
     grid-gap: 1px;
-    grid-template-columns: repeat(7, 1fr)
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 15px;
+}
+
+.footer {
+    font-family: Consolas, monospace;
+    float: right;
+    color: #999999;
+    margin-bottom: 15px;
 }
 
 .menu {
@@ -72,6 +80,17 @@ h3 {
     position: fixed;
     left: 10px;
     font-family: Consolas, monospace;
+}
+
+.login {
+    margin-top: 10px;
+}
+.login > form > input {
+    padding: 0px !important;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    width: 90% !important;
+    height: inherit !important;
 }
 
 .menu > .button {
@@ -129,3 +148,4 @@ div.title {
         grid-template-columns: 1fr;
     }
 }
+

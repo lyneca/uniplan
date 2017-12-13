@@ -12,7 +12,7 @@ class Unit(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    subjects = models.ManyToManyField(Unit)
+    subjects = models.ManyToManyField(Unit, blank=True)
 
     def __str__(self):
         return self.user.username

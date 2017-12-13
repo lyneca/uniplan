@@ -20,6 +20,18 @@
         <div class="button active">tasks</div>
         <div class="button">about</div>
         <div class="button">login</div>
+        {% if not user.is_authenticated %}
+        <div class="login">
+            <form action="/login" method="POST">
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="username"><br>
+                <input type="password" name="password" placeholder="••••••••">
+                <input type="submit" hidden>
+            </form>
+        </div>
+        {% else %}
+        Logged in as {{ user.username }}
+        {% endif %}
     </div>
     <div class="container">
 
@@ -47,6 +59,7 @@
         {% endfor %}
     {% endfor %}
     </div>
+    <div class="footer">a rainbow table project</div>
     </div>
 </body>
 </html>

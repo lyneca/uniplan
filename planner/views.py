@@ -1,6 +1,7 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from datetime import datetime, timedelta, tzinfo
+from django.contrib.auth import authenticate, login, logout
 import math
 from .models import User, Unit, Assessment
 
@@ -69,17 +70,33 @@ def index(request):
                 for event in events:
                     date.add_event(event)
             weeks[week].append(date)
-    user = User.objects.order_by('id')[1]
-    units = user.profile.subjects.order_by('name')
-    for unit in units:
-        for task in unit.assessment_set.order_by('date'):
-            delta = task.date - start_day
-            if delta.days > 0:
-                weeks[math.floor(delta.days/7)][delta.days % 7].add_task(task)
+    print(request.user.is_authenticated)
+    print(request.user.username)
+    if request.user.is_authenticated:
+        units = request.user.profile.subjects.order_by('name')
+        for unit in units:
+            for task in unit.assessment_set.order_by('date'):
+                delta = task.date - start_day
+                if delta.days > 0:
+                    weeks[math.floor(delta.days/7)][delta.days % 7].add_task(task)
             
     context = {
-        'user': user,
-        'units': {unit: unit.assessment_set.order_by('date') for unit in units},
+        'user': request.user,
         'weeks': weeks
     }
     return render(request, 'planner/index.html', context)
+
+def auth_login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        success = True
+    else:
+        success = False
+    return redirect('/')
+
+def auth_logout(request):
+    logout(request)
+    return redirect('/')
