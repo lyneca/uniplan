@@ -218,6 +218,10 @@ div.login-divider {
     .section-header#register {
         bottom: 70px;
     }
+    .tooltip {
+        bottom: 50px;
+        top: auto;
+    }
 }
 
 @media only screen and (max-width: 400px) {
