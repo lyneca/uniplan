@@ -139,7 +139,7 @@
     <div class="section">
         <h4>add subjects</h4>
         <form id="subject-form" onsubmit="return add_unit();">
-            <input type="text" list="subject-list" name="unit">
+            <input type="text" list="subject-list" name="unit" autocomplete="off">
             <datalist id="subject-list">
                 {% for unit in units %}
                     <option>{{ unit.name }}</option>
@@ -148,12 +148,10 @@
             <input type="submit" value="add">
         </form>
         <div class="current-subjects">
-            {% for unit in user.profile.subjects.all %}
-            <div class="current-subject" id="subject-{{ unit.name }}">
+            {% for unit in user.profile.subjects.all %}<div class="current-subject" id="subject-{{ unit.name }}">
                 <span>{{ unit.name }}</span>
                 <i class="material-icons" onclick="return remove_unit('{{ unit.name }}')">clear</i>
-            </div>
-            {% endfor %}
+            </div>{% endfor %}
         </div>
     </div>
     {% endif %}
