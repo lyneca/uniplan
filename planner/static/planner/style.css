@@ -81,6 +81,10 @@ h3 {
     cursor: pointer;
 }
 
+.menu > .button:before {
+    content: "- ";
+}
+
 .menu > .active {
     color: #444444;
     padding-left: 10px;
@@ -93,4 +97,29 @@ h3 {
 
 div.title {
     font-size: 30px;
+}
+
+@media only screen and (max-width: 1000px) {
+    .grid-container {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .menu {
+        position: static;
+    }
+    .menu > .button {
+        display: inline-block;
+        padding-left: 0;
+    }
+    .menu > .button:hover {
+        padding-left: 0;
+    }
+    .menu > .button:before {
+        content: "";
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
 }
