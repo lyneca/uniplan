@@ -46,8 +46,11 @@
                  }
              } 
         });
+
     </script>
     
+    <div class="tooltip">
+    </div>
     <div class="menu">
         <div class="title">uniplan</div>
         <div class="nav">
@@ -69,6 +72,11 @@
     <div class="grid-container">
         {% include 'planner/calendar.html' %}
     </div>
+    {% if reason %}
+    <div class="reason">
+        {{ reason }}
+    </div>
+    {% endif %}
     {% if not user.is_authenticated %}
     <div class="section login-container">
         <div class="login">
@@ -127,6 +135,7 @@
         $(document).ready(function() {
             // get_calendar();
         });
+
     </script>
 
     <div class="section">
@@ -158,4 +167,12 @@
     <div class="footer">a rainbow table project</div>
     </div>
 </body>
+    <script>
+        $('.event-text, .task').hover(function() {
+            $('.tooltip').html($('div, span', this).html());
+            $('.tooltip').css('opacity', 1);
+        }, function() {
+            $('.tooltip').css('opacity', 0);
+        });
+    </script>
 </html>

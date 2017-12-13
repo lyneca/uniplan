@@ -32,32 +32,23 @@ h4 {
 }
 
 .task-name, .events {
-    opacity: 0;
-    color: black;
-    width: 100px;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 5px;
-    box-shadow: 0 0 5px 5px rgba(255, 255, 255, 0.5);
+    display: none;
+    visibility: none;
+}
+
+.tooltip {
+    z-index: 10;
+    position: fixed;
+    top: 50px;
+    left: 50%;
     text-align: center;
-    border-radius: 6px;
-    position: absolute;
-    left: 0;
-    bottom: 25px;
-    z-index: 1;
-    font-style: italic;
-    vertical-align: text-top;
-    visibility: hidden;
-    transition: all 0.2s ease-out;
-}
-
-.task:hover .task-name, .event-text:hover .events {
-    visibility: visible;
-    opacity: 1;
-}
-
-.events {
-    text-align: left;
-    width: inherit;
+    transform: translateX(-50%);
+    border-radius: 3px;
+    background-color: white;
+    padding: 5px;
+    border: 1px solid #dddddd;
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
 }
 
 .task-list {
@@ -69,8 +60,21 @@ h4 {
     padding-top: 3px;
 }
 
+.week-rotate {
+    padding-right: 5px;
+}
+
 .week-word {
     display: none;
+}
+
+.reason {
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #dddddd;
+    margin: auto;
+    text-align: center;
+    font-family: Consolas, monospace;
 }
 
 .grid-container {

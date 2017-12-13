@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sslserver',
     'planner',
 ]
 
@@ -104,8 +105,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/

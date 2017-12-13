@@ -80,10 +80,31 @@ def get_weeks(request):
     return weeks
 
 def index(request):
+    """
+    Response Codes:
+        0: success
+        1: bad username/password
+        2: passwords don't match
+        3: username already exists
+        4: invalid unit name
+    """
+    errors = {
+        0: "SUCCESS!",
+        1: "INVALID USERNAME OR PASSWORD",
+        2: "PASSWORDS DO NOT MATCH",
+        3: "USERNAME ALREADY EXISTS",
+        4: "INVALID UNIT NAME"
+    }
+    if 'reason' in request.GET:
+        reason = errors[int(request.GET['reason'])]
+    else:
+        reason = ''
+
     context = {
         'weeks': get_weeks(request),
         'user': request.user,
         'units': Unit.objects.order_by('name'),
+        'reason': reason
     }
     return render(request, 'planner/index.html', context)
 
@@ -102,29 +123,32 @@ def auth_login(request):
         success = True
     else:
         success = False
+        return redirect('/?reason=1')
     return redirect('/')
 
 def auth_logout(request):
     logout(request)
-    return redirect('/')
+    return redirect('/?reason=0')
 
 def auth_register(request):
     username = request.POST['username']
     password = request.POST['password']
     password_2 = request.POST['password_2']
     if not password == password_2:
-        return redirect('/')
+        return redirect('/?reason=2')
 
     if User.objects.filter(username=username).exists():
-        return redirect('/')
+        return redirect('/?reason=3')
 
     user = User.objects.create_user(username, '', password)
     user.save()
-    return redirect('/')
+    return redirect('/?reason=0')
 
 def add_unit(request):
     subject = request.POST['unit']
     unit = Unit.objects.get(name=subject)
+    if not unit:
+        return redirect('/?reason=4')
     request.user.profile.subjects.add(unit)
     return redirect('/')
 
