@@ -157,3 +157,7 @@ def remove_unit(request):
     unit = Unit.objects.get(name=subject)
     request.user.profile.subjects.remove(unit)
     return redirect('/')
+
+def num_users(request):
+    count = User.objects.all().count()
+    return HttpResponse(str(count))
