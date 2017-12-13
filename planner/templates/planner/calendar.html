@@ -1,6 +1,8 @@
 {% for week in weeks %}
     <div class="week-number">
-        <span class="week-word">Week </span>{{ forloop.counter }}
+        <div class="week-rotate">
+            <span class="week-word">Week </span>{{ forloop.counter }}
+        </div>
     </div>
     {% for day in week %}
     <div class="calendar-day">

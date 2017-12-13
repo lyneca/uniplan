@@ -108,9 +108,22 @@ def auth_logout(request):
     logout(request)
     return redirect('/')
 
+def auth_register(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    password_2 = request.POST['password_2']
+    if not password == password_2:
+        return redirect('/')
+
+    if User.objects.filter(username=username).exists():
+        return redirect('/')
+
+    user = User.objects.create_user(username, '', password)
+    user.save()
+    return redirect('/')
+
 def add_unit(request):
     subject = request.POST['unit']
-    print(subject)
     unit = Unit.objects.get(name=subject)
     request.user.profile.subjects.add(unit)
     return redirect('/')

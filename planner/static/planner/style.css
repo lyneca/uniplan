@@ -66,6 +66,7 @@ h4 {
 
 .week-number {
     text-align: center;
+    padding-top: 3px;
 }
 
 .week-word {
@@ -94,10 +95,6 @@ h4 {
     font-family: Consolas, monospace;
 }
 
-.login {
-    margin-top: 10px;
-    width: 300px;
-}
 form > input {
     font-family: Consolas, monospace;
     padding: 10px !important;
@@ -125,7 +122,7 @@ datalist {
     padding-left: 8px;
 }
 
-.menu > a > .button {
+.nav > a > .button {
     margin-left: 8px;
     color: #999999;
     padding-left: 0;
@@ -133,16 +130,16 @@ datalist {
     cursor: pointer;
 }
 
-.menu > a > .button:before {
+.nav > a > .button:before {
     content: "- ";
 }
 
-.menu > a > .active {
+.nav > a > .active {
     color: #444444;
     padding-left: 10px;
 }
 
-.menu > a > .button:hover {
+.nav > a > .button:hover {
     color: black;
     padding-left: 10px;
 }
@@ -168,6 +165,20 @@ div.current-subject {
     margin: 5px;
 }
 
+div.login-container {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    justify-items: stretch;
+    align-items: start;
+    text-align: center;
+}
+
+div.login-divider {
+    height: 100%;
+    width: 1px;
+    background-color: #dddddd;
+}
+
 @media only screen and (max-width: 1000px) {
     .grid-container {
         grid-template-columns: 1fr 1fr 1fr;
@@ -183,19 +194,25 @@ div.current-subject {
         border-bottom: 1px solid #eeeeee;
         background-color: white;
     }
-    .menu > a > .button {
+    .nav > a > .button {
         display: inline-block;
+        margin-left: 8px;
+    }
+    .nav > a > .button:hover {
         padding-left: 0;
     }
-    .menu > a > .button:hover {
-        padding-left: 0;
-    }
-    .menu > a > .button:before {
+    .nav > a > .button:before {
         content: "";
     }
     .section-header {
         bottom: 60px;
         position: relative;
+    }
+    .section-header#login {
+        bottom: 70px;
+    }
+    .section-header#register {
+        bottom: 70px;
     }
 }
 
@@ -213,5 +230,23 @@ div.current-subject {
     }
     .week-word {
         display: inline;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    div.login-container {
+        grid-template-columns: 1fr;       
+        grid-template-rows: 1fr 1fr;       
+    }
+    div.login-divider {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 290px) {
+    .nav {
+        display: flex;
+        justify-content: space-around;
+        transition: display 0.2s;
     }
 }
