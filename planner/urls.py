@@ -11,4 +11,6 @@ urlpatterns = [
     path('remove_unit', views.remove_unit, name='remove_unit'),
     path('generate_calendar', views.generate_calendar, name='generate_calendar'),
     path('num_users', views.num_users, name='num_users'),
+    path('num_units', views.num_units, name='num_units'),
+    path('num_tasks', views.num_tasks, name='num_tasks'),
 ]

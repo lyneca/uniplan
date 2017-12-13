@@ -161,3 +161,11 @@ def remove_unit(request):
 def num_users(request):
     count = User.objects.all().count()
     return HttpResponse(str(count))
+
+def num_units(request):
+    count = Unit.objects.all().count()
+    return HttpResponse(str(count))
+
+def num_tasks(request):
+    count = Assessment.objects.all().count()
+    return HttpResponse(str(count))
