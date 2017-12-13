@@ -77,12 +77,12 @@
                     {{ event }}<br>
                 {% endfor %}
                 </div>
-            </div>
+            </div><br>
             {% endif %}
             {% for task in day.tasks %}
             <div class="task">{{ task.unit.name }}
                 <span class="task-name">{{ task.name }}<br><i class="material-icons">keyboard_arrow_down</i></span>
-            </div>
+            </div><br>
             {% endfor %}
         </div>
         {% endfor %}
