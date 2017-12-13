@@ -11,6 +11,7 @@
     <title>uniplan</title>
 </head>
 <body>
+    {% csrf_token %}
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
     <script type="text/javascript">
@@ -20,6 +21,29 @@
             $('html, body').animate({
                 scrollTop: $($.attr(this, 'href')).offset().top
             }, 500);
+        });
+        $.ajaxSetup({ 
+             beforeSend: function(xhr, settings) {
+                 function getCookie(name) {
+                     var cookieValue = null;
+                     if (document.cookie && document.cookie != '') {
+                         var cookies = document.cookie.split(';');
+                         for (var i = 0; i < cookies.length; i++) {
+                             var cookie = jQuery.trim(cookies[i]);
+                             // Does this cookie string begin with the name we want?
+                             if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                 break;
+                             }
+                         }
+                     }
+                     return cookieValue;
+                 }
+                 if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                     // Only send the token to relative URLs i.e. locally.
+                     xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                 }
+             } 
         });
     </script>
     
@@ -79,17 +103,58 @@
     </div>
     {% else %}
     <div class="section-header" id="subjects"></div>
+
+    <script>
+        function add_unit() {
+            unit_name = $('#subject-form>input[type=text]').val().toUpperCase();
+            $.post('/add_unit', {unit:unit_name}).done(function() {
+                $('.current-subjects').append(
+                '<div class="current-subject" id="subject-' + unit_name + '">' +
+                    '<span>' + unit_name + '</span>' +
+                    '<i class="material-icons" onclick="return remove_unit("' + unit_name + '")">clear</i>' +
+                '</div>'
+                );
+                unit_name = $('#subject-form>input[type=text]').val("");
+                get_calendar();
+            });
+            return false;
+        }
+        function remove_unit(unit) {
+            $.post('/remove_unit', {unit:unit}).done(function() {
+                $("#subject-" + unit).remove();
+                get_calendar();
+            });
+            return false;
+        }
+        function get_calendar() {
+            $.get('/generate_calendar').done(function(response) {
+                $('.grid-container').html(response);
+            });
+        }
+        $(document).ready(function() {
+            // get_calendar();
+        });
+    </script>
+
     <div class="section">
         <h4>add subjects</h4>
-        <form>
-        <input type="text" list="subject-list">
-        <datalist id="subject-list">
-            {% for unit in units %}
-                <option>{{ unit.name }}</option>
-            {% endfor %}
-        </datalist>
-        <input type="submit">
+        <form id="subject-form" onsubmit="return add_unit();">
+            <input type="text" list="subject-list" name="unit">
+            <datalist id="subject-list">
+                {% for unit in units %}
+                    <option>{{ unit.name }}</option>
+                {% endfor %}
+            </datalist>
+            <input type="submit" value="add">
         </form>
+        <div class="current-subjects">
+            {% for unit in user.profile.subjects.all %}
+            <div class="current-subject" id="subject-{{ unit.name }}">
+                <span>{{ unit.name }}</span>
+                <i class="material-icons" onclick="return remove_unit('{{ unit.name }}')">clear</i>
+            </div>
+            {% endfor %}
+        </div>
     </div>
     {% endif %}
     <div class="section-header" id="about"></div>

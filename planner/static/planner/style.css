@@ -151,6 +151,22 @@ div.title {
     font-size: 30px;
 }
 
+div.current-subject > i {
+    vertical-align: middle;
+    cursor: pointer;
+    color: #555555;
+}
+
+div.current-subject > span {
+    vertical-align: middle;
+}
+
+div.current-subject {
+    padding: 10px;
+    background-color: #dddddd;
+    display: inline-block;
+}
+
 @media only screen and (max-width: 1000px) {
     .grid-container {
         grid-template-columns: 1fr 1fr 1fr;

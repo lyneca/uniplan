@@ -58,7 +58,7 @@ class Day:
         self.events.append(event)
 
 # Create your views here.
-def index(request):
+def get_weeks(request):
     start_day = datetime(2018, 3, 5, tzinfo=UTC())  # This should be set to the first day of semester
     weeks = []
     for week in range(13):
@@ -70,8 +70,6 @@ def index(request):
                 for event in events:
                     date.add_event(event)
             weeks[week].append(date)
-    print(request.user.is_authenticated)
-    print(request.user.username)
     if request.user.is_authenticated:
         units = request.user.profile.subjects.order_by('name')
         for unit in units:
@@ -79,13 +77,21 @@ def index(request):
                 delta = task.date - start_day
                 if delta.days > 0:
                     weeks[math.floor(delta.days/7)][delta.days % 7].add_task(task)
-            
+    return weeks
+
+def index(request):
     context = {
+        'weeks': get_weeks(request),
         'user': request.user,
         'units': Unit.objects.order_by('name'),
-        'weeks': weeks
     }
     return render(request, 'planner/index.html', context)
+
+def generate_calendar(request):
+    context = {
+        'weeks': get_weeks(request)
+    }
+    return render(request, 'planner/calendar.html', context)
 
 def auth_login(request):
     username = request.POST['username']
@@ -100,4 +106,17 @@ def auth_login(request):
 
 def auth_logout(request):
     logout(request)
+    return redirect('/')
+
+def add_unit(request):
+    subject = request.POST['unit']
+    print(subject)
+    unit = Unit.objects.get(name=subject)
+    request.user.profile.subjects.add(unit)
+    return redirect('/')
+
+def remove_unit(request): 
+    subject = request.POST['unit']
+    unit = Unit.objects.get(name=subject)
+    request.user.profile.subjects.remove(unit)
     return redirect('/')
