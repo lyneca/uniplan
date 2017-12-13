@@ -85,8 +85,8 @@
             <form action="/login" method="POST">
                 {% csrf_token %}
                 <input type="text" name="username" placeholder="username"><br>
-                <input type="password" name="password" placeholder="password">
-                <input type="submit" hidden>
+                <input type="password" name="password" placeholder="password"><br>
+                <input type="submit" value="login">
             </form>
         </div>
         <div class="login-divider"></div>
@@ -97,8 +97,8 @@
                 {% csrf_token %}
                 <input type="text" name="username" placeholder="username"><br>
                 <input type="password" name="password" placeholder="password"><br>
-                <input type="password" name="password_2" placeholder="repeat password">
-                <input type="submit" hidden>
+                <input type="password" name="password_2" placeholder="repeat password"><br>
+                <input type="submit" value="register">
             </form>
         </div>
     </div>
