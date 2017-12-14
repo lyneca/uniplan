@@ -67,7 +67,6 @@
         </div>
     </div>
     <div class="container">
-
         <h4>schedule
         <span class="selectors">
             <span class="monthly-selector active">monthly</span>
@@ -81,11 +80,9 @@
     <div class="weekly-container">
         {% include 'planner/weekly.html' %}
     </div>
-    {% if reason %}
-    <div class="reason">
+    <div class="reason {% if not reason %}hidden{% endif %}">
         {{ reason }}
     </div>
-    {% endif %}
     {% if not user.is_authenticated %}
     <div class="section login-container">
         <div class="login">
@@ -117,15 +114,30 @@
     <script>
         function add_unit() {
             var unit_name = $('#subject-form>input[type=text]').val().toUpperCase();
-            $.post('/add_unit', {unit:unit_name}).done(function() {
-                $('.current-subjects').append(
-                '<div class="current-subject" id="subject-' + unit_name + '">' +
-                    '<span>' + unit_name + '</span>' +
-                    '<i class="material-icons" onclick="return remove_unit("' + unit_name + '")">clear</i>' +
-                '</div>'
-                );
-                unit_name = $('#subject-form>input[type=text]').val("");
-                get_calendar();
+            $.post('/add_unit', {unit:unit_name}).done(function(response) {
+                console.log(response);
+                switch (response) {
+                    case '0':
+                        $('.current-subjects').append(
+                        '<div class="current-subject" id="subject-' + unit_name + '">' +
+                            '<span>' + unit_name + '</span>' +
+                            '<i class="material-icons" onclick="return remove_unit("' + unit_name + '")">clear</i>' +
+                        '</div>'
+                        );
+                        unit_name = $('#subject-form>input[type=text]').val("");
+                        get_calendar();
+                        break;
+                    case '1':
+                        $('.reason').text('UNKNOWN UNIT');
+                        $('.reason').removeClass('hidden');
+                        break;
+                    case '2':
+                        $('.reason').text('ALREADY ADDED');
+                        $('.reason').removeClass('hidden');
+                        break;
+                    default:
+                        break;
+                }
             });
             return false;
         }
@@ -137,8 +149,11 @@
             return false;
         }
         function get_calendar() {
-            $.get('/generate_calendar').done(function(response) {
+            $.get('/generate_monthly').done(function(response) {
                 $('.monthly-container').html(response);
+            });
+            $.get('/generate_weekly').done(function(response) {
+                $('.weekly-container').html(response);
             });
         }
         $(document).ready(function() {

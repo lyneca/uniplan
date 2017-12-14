@@ -28,7 +28,8 @@ def save_user_profile(sender, instance, **kwargs):
 
 class Assessment(models.Model):
     name = models.CharField(max_length=100)
-    date = models.DateTimeField('date due/exam date')
+    date = models.DateTimeField('date due/exam date', blank=True)
+    week = models.IntegerField('week',  blank=True, null=True)
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
 
     def __str__(self):

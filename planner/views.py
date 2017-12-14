@@ -189,11 +189,13 @@ def auth_register(request):
 
 def add_unit(request):
     subject = request.POST['unit']
+    if not Unit.objects.filter(name=subject).exists():
+        return HttpResponse('1')
     unit = Unit.objects.get(name=subject)
-    if not unit:
-        return redirect('/?reason=4')
+    if request.user.profile.subjects.filter(name=subject).exists():
+        return HttpResponse('2')
     request.user.profile.subjects.add(unit)
-    return redirect('/')
+    return HttpResponse('0')
 
 def remove_unit(request): 
     subject = request.POST['unit']
