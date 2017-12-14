@@ -89,9 +89,10 @@ def get_days(request):
         units = request.user.profile.subjects.order_by('name')
         for unit in units:
             for task in unit.assessment_set.order_by('date'):
-                delta = task.date - start_day
-                if delta.days > 0:
-                    weeks[math.floor(delta.days/7)][delta.days % 7].add_task(task)
+                if task.date:
+                    delta = task.date - start_day
+                    if delta.days > 0:
+                        weeks[math.floor(delta.days/7)][delta.days % 7].add_task(task)
     return weeks
 
 def get_weeks(request):
