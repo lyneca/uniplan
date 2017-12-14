@@ -1,11 +1,11 @@
-{% for week in weeks %}
+{% for week in monthly_weeks %}
     <div class="week-number">
         <div class="week-rotate">
             <span class="week-word">Week </span>{{ forloop.counter }}
         </div>
     </div>
     {% for day in week %}
-    <div class="calendar-day">
+    <div class="calendar-week">
         <span class="date">{{ day }}</span><br />
         {% if day.events %}
         <div class="event-text">{{ day.events|length }} Event{{ day.events|pluralize }}

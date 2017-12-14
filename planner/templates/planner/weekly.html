@@ -1,0 +1,19 @@
+{% for week in weeks %}
+    <div class="calendar-week">
+        <span class="week-name">Week {{ forloop.counter }}</span><br>
+        {% if week.events %}
+            <div class="event-text">{{ week.events|length }} Event{{ week.events|pluralize }}
+                <div class="events"> 
+                {% for event in week.events %}
+                    {{ event }}<br>
+                {% endfor %}
+                </div>
+            </div><br>
+            {% endif %}
+            {% for task in week.tasks %}
+            <div class="task">{{ task.unit.name }}
+                <span class="task-name">{{ task.name }}<br></span>
+            </div>
+            {% endfor %}
+    </div>
+{% endfor %}

@@ -9,20 +9,20 @@ dates = {
     '01 Jan': ['New Year\'s Day'],
     '26 Jan': ['Australia Day'],
     '26 Feb': ['Orientation Week (26 February - 2 March)'],
-    '05 Mar': ['Lectures begin (Semester 1)'],
+    '05 Mar': ['Lectures begin'],
     '30 Mar': ['Good Friday'],
-    '31 Mar': ['Census date (Semester 1)'],
-    '02 Apr': ['Easter Monday', 'Mid-semester break begins (Semester 1)'],
-    '06 Apr': ['Mid-semester break ends (Semester 1)'],
+    '31 Mar': ['Census date'],
+    '02 Apr': ['Easter Monday', 'Mid-semester break begins'],
+    '06 Apr': ['Mid-semester break ends'],
     '25 Apr': ['ANZAC Day'],
-    '11 Jun': ['Queen\'s Birthday', 'Study vacation begins (Semester 1)'],
-    '15 Jun': ['Study vacation ends (Semester 1)'],
+    '11 Jun': ['Queen\'s Birthday', 'Study vacation begins'],
+    '15 Jun': ['Study vacation ends'],
     '18 Jun': ['Examination period begins'],
     '30 Jun': ['Examination period ends', 'Semester 1 ends'],
-    '30 Jul': ['Lectures begin (Semester 2)'],
-    '31 Aug': ['Census date (Semester 2)'],
-    '24 Sep': ['Mid-semester break begins (Semester 2)'],
-    '28 Sep': ['Mid-semester break ends (Semester 2)'],
+    '30 Jul': ['Lectures begin'],
+    '31 Aug': ['Census date'],
+    '24 Sep': ['Mid-semester break begins'],
+    '28 Sep': ['Mid-semester break ends'],
     '01 Oct': ['Labour Day'],
     '05 Nov': ['Study vacation begins'],
     '09 Nov': ['Study vacation ends'],
@@ -42,6 +42,21 @@ class UTC(tzinfo):
     def dst(self, dt):
         return ZERO
 
+class Week:
+    def __init__(self, week):
+        self.week_number = week
+        self.tasks = []
+        self.events = []
+
+    def __str__(self):
+        return "Week " + self.week_number
+
+    def add_task(self, task):
+        self.tasks.append(task)
+
+    def add_event(self, event):
+        self.events.append(event)
+
 class Day:
     def __init__(self, date):
         self.date = date
@@ -58,7 +73,7 @@ class Day:
         self.events.append(event)
 
 # Create your views here.
-def get_weeks(request):
+def get_days(request):
     start_day = datetime(2018, 3, 5, tzinfo=UTC())  # This should be set to the first day of semester
     weeks = []
     for week in range(13):
@@ -77,6 +92,27 @@ def get_weeks(request):
                 delta = task.date - start_day
                 if delta.days > 0:
                     weeks[math.floor(delta.days/7)][delta.days % 7].add_task(task)
+    return weeks
+
+def get_weeks(request):
+    start_day = datetime(2018, 3, 5, tzinfo=UTC())  # This should be set to the first day of semester
+    weeks = []
+    for week_number in range(13):
+        week = Week(week_number)
+        for day in range(7):
+            date = Day(start_day + timedelta(days=day, weeks=week_number))
+            if date.date.strftime('%d %b') in dates:
+                events = dates[date.date.strftime('%d %b')]
+                for event in events:
+                    week.add_event(event)
+        weeks.append(week)
+    if request.user.is_authenticated:
+        units = request.user.profile.subjects.order_by('name')
+        for unit in units:
+            for task in unit.assessment_set.order_by('date'):
+                delta = task.date - start_day
+                if delta.days > 0:
+                    weeks[math.floor(delta.days/7)].add_task(task)
     return weeks
 
 def index(request):
@@ -101,18 +137,25 @@ def index(request):
         reason = ''
 
     context = {
+        'monthly_weeks': get_days(request),
         'weeks': get_weeks(request),
         'user': request.user,
         'units': Unit.objects.order_by('name'),
-        'reason': reason
+        'reason': reason,
     }
     return render(request, 'planner/index.html', context)
 
-def generate_calendar(request):
+def generate_weekly(request):
     context = {
         'weeks': get_weeks(request)
     }
-    return render(request, 'planner/calendar.html', context)
+    return render(request, 'planner/weekly.html', context)
+
+def generate_monthly(request):
+    context = {
+        'monthly_weeks': get_days(request)
+    }
+    return render(request, 'planner/monthly.html', context)
 
 def auth_login(request):
     username = request.POST['username']

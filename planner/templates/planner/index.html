@@ -68,9 +68,18 @@
     </div>
     <div class="container">
 
-    <h4>schedule</h4>
-    <div class="grid-container">
-        {% include 'planner/calendar.html' %}
+        <h4>schedule
+        <span class="selectors">
+            <span class="monthly-selector active">monthly</span>
+            <span class="selector-sep"> | </span>
+            <span class="weekly-selector">weekly</span>
+        </span>
+        </h4>
+    <div class="monthly-container">
+        {% include 'planner/monthly.html' %}
+    </div>
+    <div class="weekly-container">
+        {% include 'planner/weekly.html' %}
     </div>
     {% if reason %}
     <div class="reason">
@@ -129,7 +138,7 @@
         }
         function get_calendar() {
             $.get('/generate_calendar').done(function(response) {
-                $('.grid-container').html(response);
+                $('.monthly-container').html(response);
             });
         }
         $(document).ready(function() {
@@ -174,5 +183,16 @@
         }, function() {
             $('.tooltip').css('opacity', 0);
         });
+        $('.monthly-selector').click(function() {
+            $('.weekly-container').css('display', 'none');
+            $('.monthly-container').css('display', 'grid');
+            $('.monthly-selector, .weekly-selector').toggleClass('active');
+        });
+        $('.weekly-selector').click(function() {
+            $('.weekly-container').css('display', 'grid');
+            $('.monthly-container').css('display', 'none');
+            $('.monthly-selector, .weekly-selector').toggleClass('active');
+        });
+
     </script>
 </html>

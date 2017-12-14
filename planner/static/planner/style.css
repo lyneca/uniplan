@@ -15,6 +15,12 @@ h4 {
     font-family: Consolas, monospace;
 }
 
+.calendar-week {
+    height: 100px;
+    padding: 3px;
+    box-shadow: 0 0 0 1px #dddddd;
+}
+
 .calendar-day {
     height: 100px;
     padding: 3px;
@@ -28,6 +34,7 @@ h4 {
     border-radius: 3px;
     cursor: pointer;
     margin-left: 10px;
+    margin-right: 10px;
     z-index: 0;
 }
 
@@ -56,6 +63,9 @@ h4 {
 }
 
 .week-number {
+    height: 100px;
+    padding: 3px;
+    box-shadow: 0 0 0 1px #dddddd;
     text-align: center;
     padding-top: 3px;
 }
@@ -68,6 +78,37 @@ h4 {
     display: none;
 }
 
+.week-name {
+    float: left;
+    color: grey;
+}
+
+.selectors {
+    float: right;
+    font-size: 20px;
+}
+
+.weekly-selector,
+.monthly-selector {
+    cursor: pointer;
+    transition: color 0.2s;
+    color: #999999;
+}
+
+.weekly-selector:hover,
+.monthly-selector:hover {
+    color: #666666;
+}
+
+.weekly-selector.active,
+.monthly-selector.active {
+    color: #555555;
+}
+
+.selector-sep {
+    color: #999999;
+}
+
 .reason {
     padding: 5px;
     border-radius: 3px;
@@ -77,7 +118,14 @@ h4 {
     font-family: Consolas, monospace;
 }
 
-.grid-container {
+.weekly-container {
+    display: none;
+    grid-gap: 1px;
+    grid-template-columns: repeat(6, 1fr);
+    margin-bottom: 15px;
+}
+
+.monthly-container {
     display: grid;
     grid-gap: 1px;
     grid-template-columns: 20px repeat(7, 1fr);
@@ -184,8 +232,11 @@ div.login-divider {
 }
 
 @media only screen and (max-width: 1000px) {
-    .grid-container {
+    .monthly-container {
         grid-template-columns: 1fr 1fr 1fr;
+    }
+    .weekly-container {
+        grid-template-columns: repeat(5, 1fr);
     }
     .week-number {
         display: none;
@@ -224,22 +275,48 @@ div.login-divider {
     }
 }
 
+@media only screen and (max-width: 700px) {
+    .weekly-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .weekly-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
 @media only screen and (max-width: 400px) {
-    .grid-container {
+    body {
+        text-align: center;
+    }
+    .monthly-container {
         grid-template-columns: 1fr;
+        text-align: left;
+    }
+    .weekly-container {
+        grid-template-columns: 1fr;
+        text-align: left;
+    }
+    .selectors {
+        display: block;
+        font-size: 15px;
+        margin: 0 40px 0 40px;
+        float: none;
     }
     .logged-in {
         display: none;
     }
     .week-number {
-        padding-top: 5px;
-        padding-bottom: 5px;
         display: block;
+        height: auto;
     }
     .week-word {
         display: inline;
     }
 }
+
 
 @media only screen and (max-width: 450px) {
     div.login-container {
@@ -258,3 +335,4 @@ div.login-divider {
         transition: display 0.2s;
     }
 }
+
