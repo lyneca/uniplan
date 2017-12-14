@@ -181,6 +181,12 @@ h4 {
     margin-bottom: 15px;
 }
 
+.code {
+    background-color: #eeeeee;
+    padding: 2px;
+    font-family: Consolas, monospace;
+}
+
 .footer {
     font-family: Consolas, monospace;
     float: right;
