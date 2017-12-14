@@ -5,7 +5,7 @@ class UnitAdmin(admin.ModelAdmin):
     list_display = ('name', 'long_name')
 
 class AssessmentAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'date')
+    list_display = ('__str__', 'date', 'week')
 
 admin.site.register(Profile)
 admin.site.register(Unit, UnitAdmin)
