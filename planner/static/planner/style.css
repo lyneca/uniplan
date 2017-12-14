@@ -5,8 +5,10 @@ body {
 }
 
 span.date {
-    float: left;
     color: grey;
+    user-select: none;
+    cursor: default;
+    align-self: center;
 }
 
 h4 {
@@ -15,26 +17,69 @@ h4 {
     font-family: Consolas, monospace;
 }
 
-.calendar-week {
-    height: 100px;
-    padding: 3px;
-    box-shadow: 0 0 0 1px #dddddd;
-}
-
+.calendar-week,
 .calendar-day {
     height: 100px;
     padding: 3px;
     box-shadow: 0 0 0 1px #dddddd;
+    display: grid;
+    grid-template-columns: 1fr 25px;
+    grid-template-rows: 20px 1fr;
+}
+
+.calendar-week.two-rows,
+.calendar-day.two-rows {
+    grid-template-rows: 20px 1fr;
+}
+
+.event-text {
+    color: grey;
+    align-self: center;
+    text-align: right;
+}
+
+.tasks {
+    /* height: 1fr; */
+    border-top: 1px solid #dddddd;
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    grid-auto-flow: row;
+    grid-gap: 3px;
+    overflow-y: auto;
+    padding-top: 4px;
+}
+
+.tasks.border {
+    border-top: 1px solid #dddddd;
+}
+
+.calendar-day > .tasks {
+    /* grid-template-rows: repeat(3, 1fr); */
+}
+
+.calendar-week > .tasks {
+    /* grid-template-rows: repeat(4, 1fr); */
+}
+
+.task {
+    background-color: #fafafa;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    text-align: center;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+.task:hover {
+    border-color: #bbbbbb;
+    background-color: #f0f0f0;
 }
 
 .task, .event-text {
     white-space: nowrap;
     position: relative;
     display: inline-block;
-    border-radius: 3px;
     cursor: pointer;
-    margin-left: 10px;
-    margin-right: 10px;
     z-index: 0;
 }
 
@@ -280,7 +325,7 @@ div.login-divider {
 
 @media only screen and (max-width: 700px) {
     .weekly-container {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
@@ -301,6 +346,20 @@ div.login-divider {
     .weekly-container {
         grid-template-columns: 1fr;
         text-align: left;
+    }
+    .calendar-week,
+    .calendar-day {
+
+        grid-template-rows: 20px;
+        height: auto;
+    }
+    .tasks {
+        border-top: none;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
+    }
+    .tasks:empty {
+        display: none;
     }
     .selectors {
         display: block;

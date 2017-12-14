@@ -5,22 +5,27 @@
         </div>
     </div>
     {% for day in week %}
-    <div class="calendar-week">
-        <span class="date">{{ day }}</span><br />
+    <div class="calendar-day {% if day.tasks %}two-rows{% endif %}">
+        <span class="date">{{ day }}</span>
+        <div class="event-text">
         {% if day.events %}
-        <div class="event-text">{{ day.events|length }} Event{{ day.events|pluralize }}
+            <i class="material-icons" style="font-size: 18px;">event</i>
             <div class="events"> 
             {% for event in day.events %}
                 {{ event }}<br>
             {% endfor %}
             </div>
-        </div>
         {% endif %}
-        {% for task in day.tasks %}
-        <div class="task">{{ task.unit.name }}
-            <span class="task-name">{{ task.name }}<br></span>
         </div>
+        {% spaceless %}
+        <div class="tasks {% if day.tasks %}border{% endif %}">
+        {% for task in day.tasks %}
+            <div class="task">{{ task.unit.name }}
+                <span class="task-name">{{ task.name }}<br></span>
+            </div>
         {% endfor %}
+        </div>
+        {% endspaceless %}
     </div>
     {% endfor %}
 {% endfor %}
