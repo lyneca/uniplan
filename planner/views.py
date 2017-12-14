@@ -115,7 +115,7 @@ def get_weeks(request):
                     if delta.days > 0:
                         weeks[math.floor(delta.days/7)].add_task(task)
                 else:
-                    weeks[task.week].add_task(task)
+                    weeks[task.week-1].add_task(task)
     return weeks
 
 def index(request):
