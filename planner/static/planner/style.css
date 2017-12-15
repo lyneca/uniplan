@@ -4,7 +4,7 @@
   font-style: normal;
   font-weight: 400;
   src: local('Montserrat Regular'), local('Montserrat-Regular'),
-       url('fonts/Montserrat-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('fonts/montserrat/Montserrat-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
 }
 
 /* montserrat-italic - latin */
@@ -13,7 +13,7 @@
   font-style: italic;
   font-weight: 400;
   src: local('Montserrat Italic'), local('Montserrat-Italic'),
-       url('fonts/Montserrat-Italic.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('fonts/montserrat/Montserrat-Italic.ttf') format('truetype'), /* Safari, Android, iOS */
 }
 
 @font-face {
