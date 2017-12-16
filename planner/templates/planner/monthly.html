@@ -1,8 +1,6 @@
 {% for week in monthly_weeks %}
     <div class="week-number">
-        <div class="week-rotate">
-            <span class="week-word">Week </span>{{ forloop.counter }}
-        </div>
+        <span class="week-word">Week </span>{{ forloop.counter }}
     </div>
     {% for day in week %}
     <div class="calendar-day {% if day.tasks %}two-rows{% endif %}">

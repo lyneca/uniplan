@@ -184,15 +184,14 @@ h4 {
 }
 
 .week-number {
+    background-color: #fafafa;
     height: 100px;
     padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     box-shadow: 0 0 0 1px #dddddd;
-    text-align: center;
     padding-top: 3px;
-}
-
-.week-rotate {
-    padding-right: 5px;
 }
 
 .week-word {
@@ -253,7 +252,7 @@ h4 {
 .monthly-container {
     display: grid;
     grid-gap: 1px;
-    grid-template-columns: 20px repeat(7, 1fr);
+    grid-template-columns: 25px repeat(7, 1fr);
     margin-bottom: 15px;
 }
 
