@@ -218,7 +218,7 @@
         $('body').click(function(event) {
             console.log(this);
             console.log(event.target);
-            var node;
+            var node = event.target;
             if ($(event.target).is('.unit-code')) node = event.target.parentNode;
             if ($(event.target).is('.event-text>i')) node = event.target.parentNode;
             if ($(node).is('.task')) {
