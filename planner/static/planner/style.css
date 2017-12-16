@@ -57,6 +57,7 @@ body {
 span.date {
     color: grey;
     user-select: none;
+    -moz-user-select: none;
     cursor: default;
     align-self: center;
 }
