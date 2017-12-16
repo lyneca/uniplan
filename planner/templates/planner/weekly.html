@@ -6,7 +6,9 @@
                 <i class="material-icons" style="font-size: 18px;">event</i>
                 <div class="events"> 
                 {% for event in week.events %}
-                    {{ event }}<br>
+                    <span class="event">
+                        {{ event }}
+                    </span>
                 {% endfor %}
                 </div>
         {% endif %}
@@ -14,8 +16,10 @@
         {% spaceless %}
         <div class="tasks {% if week.tasks %}border{% endif %}">
         {% for task in week.tasks %}
-            <div class="task">{{ task.unit.name }}
-                <span class="task-name">{{ task.name }}<br></span>
+            <div class="task">
+                <span class="unit-code">{{ task.unit.name }}</span>
+                <span class="unit-desc">{{ task.unit.long_name }}</span>
+                <span class="task-desc">{{ task.name }}</span>
             </div>
         {% endfor %}
         </div>

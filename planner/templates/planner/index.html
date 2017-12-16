@@ -48,7 +48,12 @@
 
     </script>
     
-    <div class="tooltip">
+    <div class="task-popup">
+        <div class="unit-code"></div>
+        <div class="hline"></div>
+        <div class="unit-desc"></div>
+        <div class="hline"></div>
+        <div class="task-desc"></div>
     </div>
     <div class="menu">
         <div class="title">uniplan</div>
@@ -207,11 +212,32 @@
     </div>
 </body>
     <script>
-        $('.event-text, .task').hover(function() {
-            $('.tooltip').html($('div, span', this).html());
-            $('.tooltip').css('opacity', 1);
-        }, function() {
-            $('.tooltip').css('opacity', 0);
+        var popup_shown = false;
+        $('.task-popup').hide();
+        
+        $('body').click(function(event) {
+            console.log(this);
+            console.log(event.target);
+            var node;
+            if ($(event.target).is('.unit-code')) node = event.target.parentNode;
+            if ($(event.target).is('.event-text>i')) node = event.target.parentNode;
+            if ($(node).is('.task')) {
+                $('.task-popup>.unit-code').html($('.unit-code', node).html());
+                $('.task-popup>.unit-desc').html($('.unit-desc', node).html());
+                $('.task-popup>.task-desc').html($('.task-desc', node).html());
+                $('.task-popup').show(100);
+                popup_shown = true;
+            } else if ($(node).is('.event-text')) {
+                $('.task-popup>.unit-code').html(
+                    $('span', node).length + " Event" + (($('span', node).length > 1) ? 's' : '')
+                );
+                $('.task-popup>.unit-desc').html($('.events', node).html());
+                $('.task-popup>.task-desc').html("");
+                $('.task-popup').show(100);
+            } else {
+                $('.task-popup').hide(100);
+                popup_shown = false;
+            }
         });
         $('.monthly-selector').click(function() {
             $('.weekly-container').css('display', 'none');

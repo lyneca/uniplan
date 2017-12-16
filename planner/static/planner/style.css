@@ -133,24 +133,49 @@ h4 {
     z-index: 0;
 }
 
-.task-name, .events {
+.events,
+.task > .task-desc,
+.task > .unit-desc {
     display: none;
     visibility: none;
 }
 
-.tooltip {
+.task-popup {
     z-index: 10;
     position: fixed;
-    top: 50px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1px 1fr 1px 1fr;
+    grid-gap: 5px;
+    align-items: center;
     left: 50%;
+    width: 40%;
+    height: 30%;
     text-align: center;
     transform: translateX(-50%);
     border-radius: 3px;
     background-color: white;
     padding: 5px;
     border: 1px solid #dddddd;
-    opacity: 0;
+    /* opacity: 0; */
     transition: opacity 0.2s ease-out;
+    cursor: pointer;
+}
+
+.hline {
+    background-color: #dddddd;
+    margin: 0 5px 0 5px;
+    height: 1px;
+}
+
+.task-popup > .unit-code {
+    font-size: 30px;
+}
+
+.task-popup > .unit-desc {
+    font-size: 20px;
+    align-content: middle;
 }
 
 .task-list {
@@ -373,9 +398,9 @@ div.login-divider {
     .section-header#register {
         bottom: 70px;
     }
-    .tooltip {
-        bottom: 50px;
-        top: auto;
+    .task-popup {
+        top: 50px;
+        width: 85%;
     }
 }
 

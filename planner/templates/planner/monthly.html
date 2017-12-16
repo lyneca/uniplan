@@ -12,7 +12,9 @@
             <i class="material-icons" style="font-size: 18px;">event</i>
             <div class="events"> 
             {% for event in day.events %}
-                {{ event }}<br>
+                <span class="event">
+                    {{ event }}
+                </span><br>
             {% endfor %}
             </div>
         {% endif %}
@@ -20,8 +22,10 @@
         {% spaceless %}
         <div class="tasks {% if day.tasks %}border{% endif %}">
         {% for task in day.tasks %}
-            <div class="task">{{ task.unit.name }}
-                <span class="task-name">{{ task.name }}<br></span>
+            <div class="task">
+                <span class="unit-code">{{ task.unit.name }}</span>
+                <span class="unit-desc">{{ task.unit.long_name }}</span>
+                <span class="task-desc">{{ task.name }}</span>
             </div>
         {% endfor %}
         </div>
