@@ -39,7 +39,7 @@ function add_unit() {
                 $('.current-subjects').append(
                 '<div class="current-subject" id="subject-' + unit_name + '">' +
                     '<span>' + unit_name + '</span>' +
-                    '<i class="material-icons" onclick="return remove_unit("' + unit_name + '")">clear</i>' +
+                    '<i class="material-icons" onclick="return remove_unit(\'' + unit_name + '\')">clear</i>' +
                 '</div>'
                 );
                 unit_name = $('#subject-form>input[type=text]').val("");
