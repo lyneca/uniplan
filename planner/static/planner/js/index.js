@@ -83,7 +83,7 @@ var popup_shown = false;
 $('.task-popup').hide();
 $('.screen-blur').hide();
 
-$('.task').click(function(event) {
+$(document).on('click', '.task', function() {
     $('.task-popup>.unit-code').html($('.unit-code', this).html());
     $('.task-popup>.unit-desc').html($('.unit-desc', this).html());
     $('.task-popup>.task-desc').html($('.task-desc', this).html());
@@ -91,7 +91,7 @@ $('.task').click(function(event) {
     $('.task-popup').show(100);
 });
 
-$('.event-text').click(function(event) {
+$(document).on('click', '.event-text', function() {
     $('.task-popup>.unit-code').html(
         $('span', this).length + " Event" + (($('span', this).length > 1) ? 's' : '')
     );
@@ -118,3 +118,4 @@ $('.weekly-selector').click(function() {
     $('.monthly-selector, .weekly-selector').toggleClass('active');
 });
 
+task_handlers();
