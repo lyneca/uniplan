@@ -52,6 +52,12 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
+    user-select: none;
+    -moz-user-select: none;
+}
+
+html {
+    font-size: 14.5px;
 }
 
 span.date {
@@ -70,7 +76,7 @@ h4 {
 
 .calendar-week,
 .calendar-day {
-    height: 100px;
+    height: 109px;
     padding: 3px;
     box-shadow: 0 0 0 1px #dddddd;
     display: grid;
@@ -120,6 +126,7 @@ h4 {
     border-radius: 3px;
     text-align: center;
     transition: border-color 0.2s, background-color 0.2s;
+    font-size: 14.5px;
 }
 .task:hover {
     border-color: #bbbbbb;
@@ -139,6 +146,15 @@ h4 {
 .task > .unit-desc {
     display: none;
     visibility: none;
+}
+
+.screen-blur {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    z-index: 100000;
 }
 
 .task-popup {
@@ -243,14 +259,14 @@ h4 {
 }
 
 .weekly-container {
-    display: none;
+    display: grid;
     grid-gap: 1px;
     grid-template-columns: repeat(6, 1fr);
     margin-bottom: 15px;
 }
 
 .monthly-container {
-    display: grid;
+    display: none;
     grid-gap: 1px;
     grid-template-columns: 25px repeat(7, 1fr);
     margin-bottom: 15px;
@@ -367,6 +383,10 @@ div.login-divider {
     .weekly-container {
         grid-template-columns: repeat(5, 1fr);
     }
+    .calendar-day,
+    .calendar-week {
+        /* height: 106px; */
+    }
     .week-number {
         display: none;
     }
@@ -430,7 +450,6 @@ div.login-divider {
     }
     .calendar-week,
     .calendar-day {
-
         grid-template-rows: 20px;
         height: auto;
     }

@@ -75,7 +75,7 @@ class Day:
 def get_days(request):
     start_day = datetime(2018, 3, 5, tzinfo=UTC())  # This should be set to the first day of semester
     weeks = []
-    for week in range(13):
+    for week in range(14):
         weeks.append([])
         for day in range(7):
             date = Day(start_day + timedelta(days=day, weeks=week))
@@ -97,7 +97,7 @@ def get_days(request):
 def get_weeks(request):
     start_day = datetime(2018, 3, 5, tzinfo=UTC())  # This should be set to the first day of semester
     weeks = []
-    for week_number in range(13):
+    for week_number in range(14):
         week = Week(week_number)
         for day in range(7):
             date = Day(start_day + timedelta(days=day, weeks=week_number))
