@@ -66,4 +66,4 @@ class Command(BaseCommand):
                         print("    {} already exists, skipping".format(name, week))
                 else:
                     print("    Skipping {} - dunno when it is!".format(task['name']))
-                    open("skips.txt", 'a').write(task['name'] + ': ' + task['due_string'] + '\n')
+                    open("skips.txt", 'a').write(name, task['name'] + ': ' + task['due_string'] + '\n')
