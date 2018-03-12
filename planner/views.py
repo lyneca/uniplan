@@ -206,6 +206,8 @@ def remove_unit(request):
     request.user.profile.subjects.remove(unit)
     return redirect('/')
 
+# API calls
+
 def num_users(request):
     count = User.objects.all().count()
     return HttpResponse(str(count))
